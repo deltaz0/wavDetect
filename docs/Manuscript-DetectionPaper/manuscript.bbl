@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{TF2}
+Valve.
+\newblock {Team Fortress 2}.
+\newblock \url{http://teamfortress.com}.
+
+\bibitem{DBLP:journals/corr/OordDZSVGKSK16}
+A{\"{a}}ron van~den Oord, Sander Dieleman, Heiga Zen, Karen Simonyan, Oriol
+  Vinyals, Alex Graves, Nal Kalchbrenner, Andrew~W. Senior, and Koray
+  Kavukcuoglu.
+\newblock Wavenet: {A} generative model for raw audio.
+\newblock {\em CoRR}, abs/1609.03499, 2016.
+
+\bibitem{vines2015rook}
+Paul Vines and Tadayoshi Kohno.
+\newblock Rook: Using video games as a low-bandwidth censorship resistant
+  communication platform.
+\newblock In {\em Proceedings of the 14th ACM Workshop on Privacy in the
+  Electronic Society}, pages 75--84. ACM, 2015.
+
+\end{thebibliography}
