@@ -79,8 +79,8 @@ if packd.shape[0] < packs.shape[0]:
     packs = packs[:packd.shape[0]]
 elif packs.shape[0] < packd.shape[0]:
     packd = packd[:packs.shape[0]]
-outputNorm = open('featuresNormalNew23DecMaskWDeriv.pkl', 'wb')
-outputRook = open('featuresRookNew23DecMaskWDeriv.pkl', 'wb')
+outputNorm = open('featuresNormalNew23DecMaskDeriv.pkl', 'wb')
+outputRook = open('featuresRookNew23DecMaskDeriv.pkl', 'wb')
 pickle.dump(packs,outputNorm)
 pickle.dump(packd,outputRook)
 outputNorm.close()
