@@ -1,0 +1,20 @@
+- Model Init Cell Complete -
+Norm Mean: 2.3889941669010213
+Rook Mean: 2.5637338764688598
+Rook Mean-Based Prob: 0.07056301417630205
+Rook Binary-Based Prob: 1.0
+- Validation Cell Complete -
+Norm Mean: 2.3888160298332335
+Rook Mean: 2.39626695628374
+Rook Mean-Based Prob: 0.0031142308177825877
+Rook Binary-Based Prob: 1.0
+
+Norm Mean: 2.0378638723124225
+Rook Mean: 2.1233095804041815
+Rook Mean-Based Prob: 0.04106808286781514
+Rook Binary-Based Prob: 1.0
+- Validation Cell Complete -
+Norm Mean: 2.0390770216367344
+Rook Mean: 2.0693365351735573
+Rook Mean-Based Prob: 0.014730510022129323
+Rook Binary-Based Prob: 1.0
