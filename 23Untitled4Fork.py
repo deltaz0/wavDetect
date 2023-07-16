@@ -27,7 +27,7 @@ permuteType = 'rand' # rand or sin
 decode = True
 mask = 0 # 0 for nomask, 1 for maskbase, 2 for maskbasederiv
 
-for runType in [0, 1, 2, 3, 4, 5, 6, 7]:
+for runType in [6, 7]:
     if runType == 0:
         faketoy = False
         decode = True
@@ -101,9 +101,9 @@ for runType in [0, 1, 2, 3, 4, 5, 6, 7]:
             else:
                 x[:,i] = signal.square(a) * amp + midpoint
         x = np.sum(x/x.shape[1],axis=1)[:,np.newaxis]
-        plt.plot(x)
-        plt.show()
-        plt.clf()
+        # plt.plot(x)
+        # plt.show()
+        # plt.clf()
         y = np.copy(x[x.shape[0]//2:])
         x = x[:x.shape[0]//2]
         if permuteType == 'rand':
