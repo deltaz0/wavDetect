@@ -15,7 +15,7 @@ minPeriod = 10
 maxPeriod = 200
 # filterSize = 32
 filterSize = 64
-modelVersion = 'base20iters'
+modelVersion = 'newbase20iters'
 resultsVersion = 'A'
 permuteStep = 8
 seqL = 200
@@ -27,7 +27,7 @@ permuteType = 'rand' # rand or sin
 decode = True
 mask = 0 # 0 for nomask, 1 for maskbase, 2 for maskbasederiv
 
-for runType in [6, 7]:
+for runType in [0, 1, 2, 3, 4, 5, 6, 7]:
     if runType == 0:
         faketoy = False
         decode = True
@@ -366,7 +366,7 @@ for runType in [6, 7]:
                 yTrain = np.roll(fTotalTarget,rI,axis=0)[:seqL*(fTotalTrain.shape[0]//seqL)].reshape(-1,seqL,fTotalTrain.shape[1])
                 history = model.fit(xTrain,yTrain,batch_size=batchSize,shuffle=False,epochs=10)
                 rnTrack = np.concatenate((rnTrack,history.history['loss']))
-            model.save('models/' + modelVersion + '-' + fileSuffix + '/23modelTotal' + str(topInd) + '-' + str(subInd) + '.h5')
+            model.save('models/' + modelVersion + '-' + fileSuffix + '/23modelCombo' + str(topInd) + '-' + str(subInd) + '.h5')
             del model
             ##print '- Training Cell Complete -'
             inputs = Input((seqL,fTotalTrainAlt.shape[1],))
@@ -384,7 +384,7 @@ for runType in [6, 7]:
                 yTrain = np.roll(fTotalTargetAlt,rI,axis=0)[:seqL*(fTotalTrainAlt.shape[0]//seqL)].reshape(-1,seqL,fTotalTrainAlt.shape[1])
                 history = model.fit(xTrain,yTrain,batch_size=batchSize,shuffle=False,epochs=10)
                 nnTrack = np.concatenate((nnTrack,history.history['loss']))
-            model.save('models/' + modelVersion + '-' + fileSuffix + '/23modelTotal' + str(topInd) + '-' + str(subInd) + '.h5')
+            model.save('models/' + modelVersion + '-' + fileSuffix + '/23modelNN' + str(topInd) + '-' + str(subInd) + '.h5')
             del model
             ##print '- Training 2 Cell Complete -'
             inputs = Input((seqL,fTotalTrainRook.shape[1],))
@@ -402,12 +402,12 @@ for runType in [6, 7]:
                 yTrain = np.roll(fTotalTargetRook,rI,axis=0)[:seqL*(fTotalTrainRook.shape[0]//seqL)].reshape(-1,seqL,fTotalTrainRook.shape[1])
                 history = model.fit(xTrain,yTrain,batch_size=batchSize,shuffle=False,epochs=10)
                 rrTrack = np.concatenate((rrTrack,history.history['loss']))
-            model.save('models/' + modelVersion + '-' + fileSuffix + '/23modelTotal' + str(topInd) + '-' + str(subInd) + '.h5')
+            model.save('models/' + modelVersion + '-' + fileSuffix + '/23modelRR' + str(topInd) + '-' + str(subInd) + '.h5')
             del model
             ##print '- Training 3 Cell Complete -'
-            model = load_model('models/' + modelVersion + '-' + fileSuffix + '/23modelTotal' + str(topInd) + '-' + str(subInd) + '.h5')
-            modelB = load_model('models/' + modelVersion + '-' + fileSuffix + '/23modelTotal' + str(topInd) + '-' + str(subInd) + '.h5')
-            modelC = load_model('models/' + modelVersion + '-' + fileSuffix + '/23modelTotal' + str(topInd) + '-' + str(subInd) + '.h5')
+            model = load_model('models/' + modelVersion + '-' + fileSuffix + '/23modelCombo' + str(topInd) + '-' + str(subInd) + '.h5')
+            modelB = load_model('models/' + modelVersion + '-' + fileSuffix + '/23modelNN' + str(topInd) + '-' + str(subInd) + '.h5')
+            modelC = load_model('models/' + modelVersion + '-' + fileSuffix + '/23modelRR' + str(topInd) + '-' + str(subInd) + '.h5')
             l2NormList = []
             l2RookList = []
             l2NormAltList = []
@@ -546,8 +546,8 @@ for runType in [6, 7]:
                 rookTotalTargetB = rookTotalTargetB.reshape(-1,seqL,rookTotalTargetB.shape[1])
                 rookTrainListB = np.arange(rookTotalTrainB.shape[0])
                 np.random.shuffle(rookTrainListB)
-                fRookValB = rookTotalTrain[rookTrainListB,:,:]
-                fRookTarB = rookTotalTarget[rookTrainListB,:,:]
+                fRookValB = rookTotalTrainB[rookTrainListB,:,:]
+                fRookTarB = rookTotalTargetB[rookTrainListB,:,:]
                 fRookValB = fRookValB.reshape(fRookValB.shape[0]*fRookValB.shape[1],fRookValB.shape[2])
                 fRookTarB = fRookTarB.reshape(fRookTarB.shape[0]*fRookTarB.shape[1],fRookTarB.shape[2])
                 
@@ -650,10 +650,10 @@ for runType in [6, 7]:
             l2Norm3OnRRHolder.append(l2Norm3OnRR)
             l2Norm4OnRRHolder.append(l2Norm4OnRR)
             l2Rook3OnRRHolder.append(l2Rook3OnRR)
-            l2NormBListHolder.append(l2NormAltList)
-            l2RookBListHolder.append(l2RookAltList)
-            l2NormAltListHolder.append(l2NormBList)
-            l2RookAltListHolder.append(l2RookBList)
+            l2NormBListHolder.append(l2NormBList)
+            l2RookBListHolder.append(l2RookBList)
+            l2NormAltListHolder.append(l2NormAltList)
+            l2RookAltListHolder.append(l2RookAltList)
 
             
 
@@ -810,10 +810,10 @@ for runType in [6, 7]:
             csv_out.append((np.mean(np.array(l2Norm3OnRR)) - np.mean(np.array(l2Norm3OnNN))) / meanAvgN3OnNNVsRR)
             csv_out.append((np.mean(np.array(l2Rook3OnRR)) - np.mean(np.array(l2Rook3OnNN))) / meanAvgR3OnNNVsRR)
             if topInd == 0 and subInd == 0:
-                with open('results/' + resultsFileName + '.csv', 'w') as f_handle:
+                with open('results/' + resultsFileName + 'results.csv', 'w') as f_handle:
                     np.savetxt(f_handle,np.array(csv_out)[np.newaxis,:])
             else:
-                with open('results/' + resultsFileName + '.csv', 'a') as f_handle:
+                with open('results/' + resultsFileName + 'results.csv', 'a') as f_handle:
                     np.savetxt(f_handle,np.array(csv_out)[np.newaxis,:])
             del model, modelB, modelC
             del l2NormList, l2NormBList, l2RookList, l2NormAltList, l2RookAltList, l2RookBList, newTotalTrain, newTotalTarget, rookTotalTrain, rookTotalTarget, \
@@ -828,10 +828,10 @@ for runType in [6, 7]:
     l2Norm3OnRR = np.hstack(l2Norm3OnRRHolder)
     l2Norm4OnRR = np.hstack(l2Norm4OnRRHolder)
     l2Rook3OnRR = np.hstack(l2Rook3OnRRHolder)
-    l2NormAltList = np.hstack(l2NormBListHolder)
-    l2RookAltList = np.hstack(l2RookBListHolder)
-    l2NormBList = np.hstack(l2NormAltListHolder)
-    l2RookBList = np.hstack(l2RookAltListHolder)
+    l2NormAltList = np.hstack(l2NormAltListHolder)
+    l2RookAltList = np.hstack(l2RookAltListHolder)
+    l2NormBList = np.hstack(l2NormBListHolder)
+    l2RookBList = np.hstack(l2RookBListHolder)
     np.save('results/' + resultsFileName + 'l2NormList.npy', l2NormList, allow_pickle=True)
     np.save('results/' + resultsFileName + 'l2RookList.npy', l2RookList, allow_pickle=True)
     np.save('results/' + resultsFileName + 'l2Norm3OnNN.npy', l2Norm3OnNN, allow_pickle=True)
@@ -842,182 +842,11 @@ for runType in [6, 7]:
     np.save('results/' + resultsFileName + 'l2Rook3OnRR.npy', l2Rook3OnRR, allow_pickle=True)
     np.save('results/' + resultsFileName + 'l2NormBList.npy', l2NormBList, allow_pickle=True)
     np.save('results/' + resultsFileName + 'l2RookBList.npy', l2RookBList, allow_pickle=True)
-    np.save('results/' + resultsFileName + 'l2NormAltList.npy', l2NormBList, allow_pickle=True)
-    np.save('results/' + resultsFileName + 'l2RookAltList.npy', l2RookBList, allow_pickle=True)
+    np.save('results/' + resultsFileName + 'l2NormAltList.npy', l2NormAltList, allow_pickle=True)
+    np.save('results/' + resultsFileName + 'l2RookAltList.npy', l2RookAltList, allow_pickle=True)
     del fNorm, fRook, l2NormListHolder, l2RookListHolder, l2Norm3OnNNHolder, l2Rook3OnNNHolder, \
         l2Norm3OnRRHolder, l2Rook3OnRRHolder, l2NormBListHolder, l2RookBListHolder, \
         l2NormAltListHolder, l2RookAltListHolder, l2Norm4OnNNHolder, l2Norm4OnRRHolder
     del l2NormList, l2RookList, l2Norm3OnNN, l2Rook3OnNN, l2Norm3OnRR, l2Rook3OnRR, l2NormAltList, \
         l2RookAltList, l2NormBList, l2RookBList, l2Norm4OnNN, l2Norm4OnRR
-    #print '- Feature Import Cell Complete -'
-
-
-    # In[5]:
-
-
-    import numpy as np
-    #%matplotlib inline
-    import matplotlib.pyplot as plt
-    #resultsFileName = 'results/57778system/resultsa10.csv'
-    results = np.genfromtxt('results/' + resultsFileName + '.csv')
-    results = results[-32:,:]
-    print(results.shape)
-    # # ==========================================================================
-    # plt.plot(results[:,0],label='NormB')
-    # plt.plot(results[:,1],label='NormAlt')
-    # plt.plot(results[:,2],label='RookB')
-    # plt.plot(results[:,3],label='RookAlt')
-    # plt.plot(results[:,4],label='Rook')
-    # plt.plot(results[:,5],label='Norm')
-    # plt.legend()
-    # plt.title("Means")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,6],label='NormB & NormAlt')
-    # plt.plot(results[:,7],label='RookB & RookAlt')
-    # plt.plot(results[:,8],label='Rook & Norm')
-    # plt.legend()
-    # plt.title("Avg Means")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(np.divide(results[:,0],results[:,6]),label='NormB')
-    # plt.plot(np.divide(results[:,1],results[:,6]),label='NormAlt')
-    # plt.plot(np.divide(results[:,2],results[:,7]),label='RookB')
-    # plt.plot(np.divide(results[:,3],results[:,7]),label='RookAlt')
-    # plt.plot(np.divide(results[:,4],results[:,8]),label='Rook')
-    # plt.plot(np.divide(results[:,5],results[:,8]),label='Norm')
-    # plt.legend()
-    # plt.title("Scaled Means")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,9],label='NormB')
-    # plt.plot(results[:,10],label='NormAlt')
-    # plt.plot(results[:,11],label='RookB')
-    # plt.plot(results[:,12],label='RookAlt')
-    # plt.plot(results[:,13],label='Rook')
-    # plt.plot(results[:,14],label='Norm')
-    # plt.legend()
-    # plt.title("Std Devs")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,15],label='NormB')
-    # plt.plot(results[:,16],label='NormAlt')
-    # plt.plot(results[:,17],label='RookB')
-    # plt.plot(results[:,18],label='RookAlt')
-    # plt.plot(results[:,19],label='Rook')
-    # plt.plot(results[:,20],label='Norm')
-    # plt.legend()
-    # plt.title("RMSs")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,21],label='NormB & NormAlt')
-    # plt.plot(results[:,22],label='RookB & RookAlt')
-    # plt.plot(results[:,23],label='Rook & Norm')
-    # plt.legend()
-    # plt.title("Avg RMSs")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(np.divide(results[:,15],results[:,21]),label='NormB')
-    # plt.plot(np.divide(results[:,16],results[:,21]),label='NormAlt')
-    # plt.plot(np.divide(results[:,17],results[:,22]),label='RookB')
-    # plt.plot(np.divide(results[:,18],results[:,22]),label='RookAlt')
-    # plt.plot(np.divide(results[:,19],results[:,23]),label='Rook')
-    # plt.plot(np.divide(results[:,20],results[:,23]),label='Norm')
-    # plt.legend()
-    # plt.title("Scaled RMSs")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,24],label='NormB v NormAlt')
-    # plt.plot(results[:,25],label='RookB v RookAlt')
-    # plt.plot(results[:,26],label='Rook v Norm')
-    # plt.legend()
-    # plt.title("Scaled Mean Comparisons")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,27],label='NormB v NormAlt')
-    # plt.plot(results[:,28],label='RookB v RookAlt')
-    # plt.plot(results[:,29],label='Rook v Norm')
-    # plt.legend()
-    # plt.title("Scaled RMS Comparisons")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,30],label='NormB v NormAlt')
-    # plt.plot(results[:,31],label='RookB v RookAlt')
-    # plt.plot(results[:,32],label='Rook v Norm')
-    # plt.legend()
-    # plt.title("RMS of Comparisons")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,33],label='NormB v NormAlt')
-    # plt.plot(results[:,34],label='RookB v RookAlt')
-    # plt.plot(results[:,35],label='Rook v Norm')
-    # plt.legend()
-    # plt.title("Binary Comparisons")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,36],label='NormB & NormAlt')
-    # plt.plot(results[:,37],label='RookB & RookAlt')
-    # plt.plot(results[:,38],label='Rook & Norm')
-    # plt.legend()
-    # plt.title("RMS of Loss of model history Comparisons")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,39],label='Norm3 on NN')
-    # plt.plot(results[:,40],label='Rook3 on NN')
-    # plt.plot(results[:,41],label='Norm4 on NN')
-    # plt.plot(results[:,42],label='Norm3 on RR')
-    # plt.plot(results[:,43],label='Rook3 on RR')
-    # plt.plot(results[:,44],label='Norm4 on RR')
-    # plt.legend()
-    # plt.title("Means")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,45],label='Rook3 & Norm3 on NN')
-    # plt.plot(results[:,46],label='Norm4 & Norm3 on NN')
-    # plt.plot(results[:,47],label='Rook3 & Norm3 on RR')
-    # plt.plot(results[:,48],label='Norm4 & Norm3 on RR')
-    # plt.legend()
-    # plt.title("Avg Means")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,49],label='Norm3 on NN & RR')
-    # plt.plot(results[:,50],label='Rook3 on NN & RR')
-    # plt.legend()
-    # plt.title("Avg Means")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,51],label='Norm3 on NN')
-    # plt.plot(results[:,52],label='Rook3 on NN')
-    # plt.plot(results[:,53],label='Norm4 on NN')
-    # plt.plot(results[:,54],label='Norm3 on RR')
-    # plt.plot(results[:,55],label='Rook3 on RR')
-    # plt.plot(results[:,56],label='Norm4 on RR')
-    # plt.legend()
-    # plt.title("Std Devs")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,57],label='Norm3 on NN')
-    # plt.plot(results[:,58],label='Rook3 on NN')
-    # plt.plot(results[:,59],label='Norm4 on NN')
-    # plt.plot(results[:,60],label='Norm3 on RR')
-    # plt.plot(results[:,61],label='Rook3 on RR')
-    # plt.plot(results[:,62],label='Norm4 on RR')
-    # plt.legend()
-    # plt.title("RMS's")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,63],label='Rook3 vs Norm3 on NN')
-    # plt.plot(results[:,64],label='Norm4 vs Norm3 on NN')
-    # plt.plot(results[:,65],label='Rook3 vs Norm3 on RR')
-    # plt.plot(results[:,66],label='Norm4 vs Norm3 on RR')
-    # plt.legend()
-    # plt.title("Scaled Mean Comparisons")
-    # plt.show()
-    # plt.clf()
-    # plt.plot(results[:,67],label='Norm3 on NN vs RR')
-    # plt.plot(results[:,68],label='Rook3 on NN vs RR')
-    # plt.legend()
-    # plt.title("Scaled Mean Comparisons")
-    # plt.show()
-    # plt.clf()
-    # # ==========================================================================
+    print('Final Save Complete')
