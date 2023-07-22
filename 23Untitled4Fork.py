@@ -15,17 +15,23 @@ minPeriod = 10
 maxPeriod = 200
 # filterSize = 32
 filterSize = 64
-modelVersion = 'newbase20iters'
+modelVersion = 'rollhalfseqbase32iters'
 resultsVersion = 'A'
 permuteStep = 8
 seqL = 200
-trainIters = 20
+trainIters = 32
 batchSize = 64
 
 faketoy = False
 permuteType = 'rand' # rand or sin
 decode = True
 mask = 0 # 0 for nomask, 1 for maskbase, 2 for maskbasederiv
+
+fullRoll = True
+
+rollAmt = 1
+if fullRoll:
+    rollAmt = seqL//2
 
 for runType in [0, 1, 2, 3, 4, 5, 6, 7]:
     if runType == 0:
@@ -271,9 +277,9 @@ for runType in [0, 1, 2, 3, 4, 5, 6, 7]:
             #fNormBTargetB = fNormBTarget[shufListB[(bShuf[subInd]*shufListB.shape[0])//4:(bShuf[(subInd+1)%4]*shufListB.shape[0])//4]]
                     
             fNormA = fNormTwo.reshape(-1,seqL,fNormTwo.shape[1])
-            fNormATarget = np.roll(fNormTwo,-1,axis=0).reshape(-1,seqL,fNormTwo.shape[1])
+            fNormATarget = np.roll(fNormTwo,-rollAmt,axis=0).reshape(-1,seqL,fNormTwo.shape[1])
             fNormB = np.roll(fNormTwo,-seqL//2,axis=0).reshape(-1,seqL,fNormTwo.shape[1])
-            fNormBTarget = np.roll(fNormTwo,(-seqL//2)-1,axis=0).reshape(-1,seqL,fNormTwo.shape[1])
+            fNormBTarget = np.roll(fNormTwo,(-seqL//2)-rollAmt,axis=0).reshape(-1,seqL,fNormTwo.shape[1])
             fNormAB = fNormA[shufListB[(subInd*shufListB.shape[0])//4:((subInd+1)*shufListB.shape[0])//4]]
             fNormATargetB = fNormATarget[shufListB[(subInd*shufListB.shape[0])//4:((subInd+1)*shufListB.shape[0])//4]]
             fNormBB = fNormB[shufListB[(subInd*shufListB.shape[0])//4:((subInd+1)*shufListB.shape[0])//4]]
@@ -284,9 +290,9 @@ for runType in [0, 1, 2, 3, 4, 5, 6, 7]:
             fNormTargetB = fNormTargetB.reshape(fNormTargetB.shape[0]*fNormTargetB.shape[1],fNormTargetB.shape[2])
             
             fNormA = fNorm.reshape(-1,seqL,fNorm.shape[1])
-            fNormATarget = np.roll(fNorm,-1,axis=0).reshape(-1,seqL,fNorm.shape[1])
+            fNormATarget = np.roll(fNorm,-rollAmt,axis=0).reshape(-1,seqL,fNorm.shape[1])
             fNormB = np.roll(fNorm,-seqL//2,axis=0).reshape(-1,seqL,fNorm.shape[1])
-            fNormBTarget = np.roll(fNorm,(-seqL//2)-1,axis=0).reshape(-1,seqL,fNorm.shape[1])
+            fNormBTarget = np.roll(fNorm,(-seqL//2)-rollAmt,axis=0).reshape(-1,seqL,fNorm.shape[1])
             fNormA = fNormA[shufList[(subInd*shufList.shape[0])//4:((subInd+1)*shufList.shape[0])//4]]
             fNormATarget = fNormATarget[shufList[(subInd*shufList.shape[0])//4:((subInd+1)*shufList.shape[0])//4]]
             fNormB = fNormB[shufList[(subInd*shufList.shape[0])//4:((subInd+1)*shufList.shape[0])//4]]
@@ -297,9 +303,9 @@ for runType in [0, 1, 2, 3, 4, 5, 6, 7]:
             fNormTarget = fNormTarget.reshape(fNormTarget.shape[0]*fNormTarget.shape[1],fNormTarget.shape[2])
             
             fNormA = fRookTwo.reshape(-1,seqL,fRookTwo.shape[1])
-            fNormATarget = np.roll(fRookTwo,-1,axis=0).reshape(-1,seqL,fRookTwo.shape[1])
+            fNormATarget = np.roll(fRookTwo,-rollAmt,axis=0).reshape(-1,seqL,fRookTwo.shape[1])
             fNormB = np.roll(fRookTwo,-seqL//2,axis=0).reshape(-1,seqL,fRookTwo.shape[1])
-            fNormBTarget = np.roll(fRookTwo,(-seqL//2)-1,axis=0).reshape(-1,seqL,fRookTwo.shape[1])
+            fNormBTarget = np.roll(fRookTwo,(-seqL//2)-rollAmt,axis=0).reshape(-1,seqL,fRookTwo.shape[1])
             fNormAB = fNormA[shufListC[(subInd*shufListC.shape[0])//4:((subInd+1)*shufListC.shape[0])//4]]
             fNormATargetB = fNormATarget[shufListC[(subInd*shufListC.shape[0])//4:((subInd+1)*shufListC.shape[0])//4]]
             fNormBB = fNormB[shufListC[(subInd*shufListC.shape[0])//4:((subInd+1)*shufListC.shape[0])//4]]
@@ -310,9 +316,9 @@ for runType in [0, 1, 2, 3, 4, 5, 6, 7]:
             fRookTargetB = fRookTargetB.reshape(fRookTargetB.shape[0]*fRookTargetB.shape[1],fRookTargetB.shape[2])
             
             fNormA = fRook.reshape(-1,seqL,fRook.shape[1])
-            fNormATarget = np.roll(fRook,-1,axis=0).reshape(-1,seqL,fRook.shape[1])
+            fNormATarget = np.roll(fRook,-rollAmt,axis=0).reshape(-1,seqL,fRook.shape[1])
             fNormB = np.roll(fRook,-seqL//2,axis=0).reshape(-1,seqL,fRook.shape[1])
-            fNormBTarget = np.roll(fRook,(-seqL//2)-1,axis=0).reshape(-1,seqL,fRook.shape[1])
+            fNormBTarget = np.roll(fRook,(-seqL//2)-rollAmt,axis=0).reshape(-1,seqL,fRook.shape[1])
             fNormA = fNormA[shufListR[(subInd*shufListR.shape[0])//4:((subInd+1)*shufListR.shape[0])//4]]
             fNormATarget = fNormATarget[shufListR[(subInd*shufListR.shape[0])//4:((subInd+1)*shufListR.shape[0])//4]]
             fNormB = fNormB[shufListR[(subInd*shufListR.shape[0])//4:((subInd+1)*shufListR.shape[0])//4]]
