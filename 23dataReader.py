@@ -13,7 +13,7 @@ system = 57779
 newpath = "./" + str(system) + "23figs"
 if not os.path.exists(newpath):
     os.makedirs(newpath)
-runVer = 'newbase20iters-New23DecMaskBase-A'
+runVer = 'newbase20iters-FakeToyPermuteRand-A'
 resultsFileName = 'results/' + runVer + '/results.csv'
 normListFileName = 'results/' + runVer + '/l2NormList.npy'
 normList = np.load(normListFileName, allow_pickle=True)
