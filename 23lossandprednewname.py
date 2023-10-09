@@ -140,67 +140,65 @@ for modelVer in [
               '68   - (mean error diff: rook3onRR - rook3onNN) / avgmean r3onNNRR \n' +
               ' -- done -- ')
         print(results.shape)
-        for topInd in range(4):
-            for subInd in range(4):
-                nlalt = np.load('results/' + runVer + '/l2NormAltList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-                nlb = np.load('results/' + runVer + '/l2NormBList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-                normBNormComp = []
-                meanAvgNormvNorm = (np.mean(nlalt) + np.mean(nlb)) / 2.0
-                rlalt = np.load('results/' + runVer + '/l2RookAltList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-                rlb = np.load('results/' + runVer + '/l2RookBList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-                rookBRookComp = []
-                meanAvgRookvRook = (np.mean(rlalt) + np.mean(rlb)) / 2.0
-                nl = np.load('results/' + runVer + '/l2NormList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-                rl = np.load('results/' + runVer + '/l2RookList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-                rookNormComp = []
-                meanAvgRookvNorm = (np.mean(nl) + np.mean(rl)) / 2.0
-                for i in range(int(len(nlalt)-((len(nlalt)//4)+1))):
-                    normBNormComp.append((np.mean(np.array(nlb[i:i+len(nlb)//4])) - np.mean(np.array(nlalt[i:i+len(nlalt)//4]))) / meanAvgNormvNorm)
-                    rookBRookComp.append((np.mean(np.array(rlb[i:i+len(rlb)//4])) - np.mean(np.array(rlalt[i:i+len(rlalt)//4]))) / meanAvgRookvRook)
-                    rookNormComp.append((np.mean(np.array(rl[i:i+len(rl)//4])) - np.mean(np.array(nl[i:i+len(nl)//4]))) / meanAvgRookvNorm)
-                plt.plot(normBNormComp,label='Clean2 - Clean1 on Clean Model')
-                plt.plot(rookBRookComp,label='Mutated2 - Mutated1 on Mutated Model')
-                plt.plot(rookNormComp,label='Mutated1 - Clean1 on Dual Model')
-                plt.xlabel('Index of Moving Average (1/4 of the Test Data)')
-                plt.ylabel('Scaled Mean Prediction Error Difference')
-                plt.legend()
-                plt.gcf().set_size_inches(12,7)
-                plt.tight_layout();
-                plt.savefig('results/' + runVer + '/-newPredErrorComps' + str(topInd) + '-' + str(subInd) + '.png')
-                # plt.show()
-                plt.clf()
-        topInd = 0
-        subInd = 0
-        nlalt = np.load('results/' + runVer + '/l2NormAltList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-        nlb = np.load('results/' + runVer + '/l2NormBList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-        normBNormComp = []
-        meanAvgNormvNorm = (np.mean(nlalt) + np.mean(nlb)) / 2.0
-        rlalt = np.load('results/' + runVer + '/l2RookAltList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-        rlb = np.load('results/' + runVer + '/l2RookBList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-        rookBRookComp = []
-        meanAvgRookvRook = (np.mean(rlalt) + np.mean(rlb)) / 2.0
-        nl = np.load('results/' + runVer + '/l2NormList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-        rl = np.load('results/' + runVer + '/l2RookList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
-        rookNormComp = []
-        meanAvgRookvNorm = (np.mean(nl) + np.mean(rl)) / 2.0
-        for i in range(int(len(nlalt)-((len(nlalt)//4)+1))):
-            normBNormComp.append((np.mean(np.array(nlb[i:i+len(nlb)//4])) - np.mean(np.array(nlalt[i:i+len(nlalt)//4]))) / meanAvgNormvNorm)
-            rookBRookComp.append((np.mean(np.array(rlb[i:i+len(rlb)//4])) - np.mean(np.array(rlalt[i:i+len(rlalt)//4]))) / meanAvgRookvRook)
-            rookNormComp.append((np.mean(np.array(rl[i:i+len(rl)//4])) - np.mean(np.array(nl[i:i+len(nl)//4]))) / meanAvgRookvNorm)
-        plt.plot(normBNormComp,label='Clean Model Loss Hist')
-        plt.plot(rookBRookComp,label='Mutated Model Loss Hist')
-        plt.plot(rookNormComp,label='Dual Model Loss Hist')
-        plt.xlabel('Index of Moving Average (1/4 of the Test Data)')
-        plt.ylabel('Scaled Mean Prediction Error Difference')
-        plt.legend()
-        # plt.tight_layout();
-        plt.savefig('results/dummyforlossreplace.png')
-        # plt.show()
-        plt.clf()
+        # for topInd in range(4):
+        #     for subInd in range(4):
+        #         nlalt = np.load('results/' + runVer + '/l2NormAltList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        #         nlb = np.load('results/' + runVer + '/l2NormBList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        #         normBNormComp = []
+        #         meanAvgNormvNorm = (np.mean(nlalt) + np.mean(nlb)) / 2.0
+        #         rlalt = np.load('results/' + runVer + '/l2RookAltList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        #         rlb = np.load('results/' + runVer + '/l2RookBList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        #         rookBRookComp = []
+        #         meanAvgRookvRook = (np.mean(rlalt) + np.mean(rlb)) / 2.0
+        #         nl = np.load('results/' + runVer + '/l2NormList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        #         rl = np.load('results/' + runVer + '/l2RookList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        #         rookNormComp = []
+        #         meanAvgRookvNorm = (np.mean(nl) + np.mean(rl)) / 2.0
+        #         for i in range(int(len(nlalt)-((len(nlalt)//4)+1))):
+        #             normBNormComp.append((np.mean(np.array(nlb[i:i+len(nlb)//4])) - np.mean(np.array(nlalt[i:i+len(nlalt)//4]))) / meanAvgNormvNorm)
+        #             rookBRookComp.append((np.mean(np.array(rlb[i:i+len(rlb)//4])) - np.mean(np.array(rlalt[i:i+len(rlalt)//4]))) / meanAvgRookvRook)
+        #             rookNormComp.append((np.mean(np.array(rl[i:i+len(rl)//4])) - np.mean(np.array(nl[i:i+len(nl)//4]))) / meanAvgRookvNorm)
+        #         plt.plot(normBNormComp,label='Clean2 - Clean1 on Clean Model')
+        #         plt.plot(rookBRookComp,label='Mutated2 - Mutated1 on Mutated Model')
+        #         plt.plot(rookNormComp,label='Mutated1 - Clean1 on Dual Model')
+        #         plt.xlabel('Index of Moving Average (1/4 of the Test Data)')
+        #         plt.ylabel('Scaled Mean Prediction Error Difference')
+        #         plt.legend()
+        #         plt.gcf().set_size_inches(12,7)
+        #         plt.tight_layout();
+        #         plt.savefig('results/' + runVer + '/-newPredErrorComps' + str(topInd) + '-' + str(subInd) + '.png')
+        #         # plt.show()
+        #         plt.clf()
+        # topInd = 0
+        # subInd = 0
+        # nlalt = np.load('results/' + runVer + '/l2NormAltList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        # nlb = np.load('results/' + runVer + '/l2NormBList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        # normBNormComp = []
+        # meanAvgNormvNorm = (np.mean(nlalt) + np.mean(nlb)) / 2.0
+        # rlalt = np.load('results/' + runVer + '/l2RookAltList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        # rlb = np.load('results/' + runVer + '/l2RookBList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        # rookBRookComp = []
+        # meanAvgRookvRook = (np.mean(rlalt) + np.mean(rlb)) / 2.0
+        # nl = np.load('results/' + runVer + '/l2NormList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        # rl = np.load('results/' + runVer + '/l2RookList.npy')[:,100*(topInd*4+subInd):100*(topInd*4+subInd+1)]
+        # rookNormComp = []
+        # meanAvgRookvNorm = (np.mean(nl) + np.mean(rl)) / 2.0
+        # for i in range(int(len(nlalt)-((len(nlalt)//4)+1))):
+        #     normBNormComp.append((np.mean(np.array(nlb[i:i+len(nlb)//4])) - np.mean(np.array(nlalt[i:i+len(nlalt)//4]))) / meanAvgNormvNorm)
+        #     rookBRookComp.append((np.mean(np.array(rlb[i:i+len(rlb)//4])) - np.mean(np.array(rlalt[i:i+len(rlalt)//4]))) / meanAvgRookvRook)
+        #     rookNormComp.append((np.mean(np.array(rl[i:i+len(rl)//4])) - np.mean(np.array(nl[i:i+len(nl)//4]))) / meanAvgRookvNorm)
+        # plt.plot(normBNormComp,label='Clean Model Loss Hist')
+        # plt.plot(rookBRookComp,label='Mutated Model Loss Hist')
+        # plt.plot(rookNormComp,label='Dual Model Loss Hist')
+        # plt.xlabel('Index of Moving Average (1/4 of the Test Data)')
+        # plt.ylabel('Scaled Mean Prediction Error Difference')
+        # plt.legend()
+        # # plt.tight_layout();
+        # plt.savefig('results/dummyforlossreplace.png')
+        # plt.clf()
         gs = gridspec.GridSpec(1, 2, width_ratios=[6, 1])
         plt.subplot(gs[0])
         plt.plot(results[:, 39], label='Clean3 on Clean Model')
-        # plt.plot(results[:, 41], label='Clean4 on Clean Model')
         plt.plot(results[:, 40], label='Mutated3 on Clean Model')
         plt.legend()
         plt.suptitle("Mean Prediction Error on Clean Model with Unseen Test Data" +
@@ -209,8 +207,7 @@ for modelVer in [
         plt.xlabel('Model Version')
         plt.subplot(gs[1])
         plt.bar(0, np.mean(results[:, 39]), label='Clean3 on Clean Model')
-        # plt.bar(1, np.mean(results[:, 41]), label='Clean4 on Clean Model')
-        plt.bar(2, np.mean(results[:, 40]), label='Mutated3 on Clean Model')
+        plt.bar(1, np.mean(results[:, 40]), label='Mutated3 on Clean Model')
         plt.setp(plt.gca(), ylim=plt.gcf().get_axes()[0].get_ylim())
         plt.gca().get_xaxis().set_visible(False)
         plt.ylabel("Avg Across Versions")
@@ -224,7 +221,6 @@ for modelVer in [
 
         outDict = {
             'totalmpen3nn': np.mean(results[:, 39]),
-            # 'totalmpen4nn': np.mean(results[:, 41]),
             'totalmper3nn': np.mean(results[:, 40])
         }
 
