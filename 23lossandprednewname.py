@@ -196,77 +196,91 @@ for modelVer in [
         # # plt.tight_layout();
         # plt.savefig('results/dummyforlossreplace.png')
         # plt.clf()
-        gs = gridspec.GridSpec(1, 2, width_ratios=[6, 1])
-        plt.subplot(gs[0])
-        plt.plot(results[:, 39], label='Clean3 on Clean Model')
-        plt.plot(results[:, 40], label='Mutated3 on Clean Model')
-        plt.legend()
-        plt.suptitle("Mean Prediction Error on Clean Model with Unseen Test Data" +
-                     "\nModel: " + modelPre + "   -   Data: " + modelSuf)
-        plt.ylabel('Value')
-        plt.xlabel('Model Version')
-        plt.subplot(gs[1])
-        plt.bar(0, np.mean(results[:, 39]), label='Clean3 on Clean Model')
-        plt.bar(1, np.mean(results[:, 40]), label='Mutated3 on Clean Model')
-        plt.setp(plt.gca(), ylim=plt.gcf().get_axes()[0].get_ylim())
-        plt.gca().get_xaxis().set_visible(False)
-        plt.ylabel("Avg Across Versions")
-        for line in plt.gcf().get_axes()[0].legend().get_lines():
-            line.set_linewidth(2.5)
-        plt.gcf().set_size_inches(13, 7)
-        plt.tight_layout()
-        # plt.show()
-        plt.savefig(resOutput + 'TotalMPE-3-3' + '.png')
-        plt.clf()
+        # gs = gridspec.GridSpec(1, 2, width_ratios=[6, 1])
+        # plt.subplot(gs[0])
+        # plt.plot(results[:, 39], label='Clean3 on Clean Model')
+        # plt.plot(results[:, 40], label='Mutated3 on Clean Model')
+        # plt.legend()
+        # plt.suptitle("Mean Prediction Error on Clean Model with Unseen Test Data" +
+        #              "\nModel: " + modelPre + "   -   Data: " + modelSuf)
+        # plt.ylabel('Value')
+        # plt.xlabel('Model Version')
+        # plt.subplot(gs[1])
+        # plt.bar(0, np.mean(results[:, 39]), label='Clean3 on Clean Model')
+        # plt.bar(1, np.mean(results[:, 40]), label='Mutated3 on Clean Model')
+        # plt.setp(plt.gca(), ylim=plt.gcf().get_axes()[0].get_ylim())
+        # plt.gca().get_xaxis().set_visible(False)
+        # plt.ylabel("Avg Across Versions")
+        # for line in plt.gcf().get_axes()[0].legend().get_lines():
+        #     line.set_linewidth(2.5)
+        # plt.gcf().set_size_inches(13, 7)
+        # plt.tight_layout()
+        # # plt.show()
+        # plt.savefig(resOutput + 'TotalMPE-3-3' + '.png')
+        # plt.clf()
 
-        outDict = {
-            'totalmpen3nn': np.mean(results[:, 39]),
-            'totalmper3nn': np.mean(results[:, 40])
-        }
+        # outDict = {
+        #     'totalmpen3nn': np.mean(results[:, 39]),
+        #     'totalmper3nn': np.mean(results[:, 40])
+        # }
 
-        with open(resOutput + 'ResultsDict-append3only', 'wb') as handle:
-            pickle.dump(outDict, handle)
+        # with open(resOutput + 'ResultsDict-append3only', 'wb') as handle:
+        #     pickle.dump(outDict, handle)
 
-        with open(resOutput + 'resultsCSVDict-append3only.csv', 'w', newline='') as f:
-            writer = csv.writer(f)
-            for item in outDict.items():
-                writer.writerow(item)
+        # with open(resOutput + 'resultsCSVDict-append3only.csv', 'w', newline='') as f:
+        #     writer = csv.writer(f)
+        #     for item in outDict.items():
+        #         writer.writerow(item)
         
-        gs = gridspec.GridSpec(1, 2, width_ratios=[6, 1])
-        plt.subplot(gs[0])
-        plt.plot(results[:, 39], label='Clean3 on Clean Model')
-        plt.plot(results[:, 41], label='Clean4 on Clean Model')
-        plt.plot(results[:, 40], label='Mutated3 on Clean Model')
-        plt.legend()
-        plt.suptitle("Mean Prediction Error on Clean Model with Unseen Test Data" +
-                     "\nModel: " + modelPre + "   -   Data: " + modelSuf)
-        plt.ylabel('Value')
-        plt.xlabel('Model Version')
-        plt.subplot(gs[1])
-        plt.bar(0, np.mean(results[:, 39]), label='Clean3 on Clean Model')
-        plt.bar(1, np.mean(results[:, 41]), label='Clean4 on Clean Model')
-        plt.bar(2, np.mean(results[:, 40]), label='Mutated3 on Clean Model')
-        plt.setp(plt.gca(), ylim=plt.gcf().get_axes()[0].get_ylim())
-        plt.gca().get_xaxis().set_visible(False)
-        plt.ylabel("Avg Across Versions")
-        for line in plt.gcf().get_axes()[0].legend().get_lines():
-            line.set_linewidth(2.5)
-        plt.gcf().set_size_inches(13, 7)
-        plt.tight_layout()
-        # plt.show()
-        plt.savefig(resOutput + 'TotalMPE-3-4' + '.png')
-        plt.clf()
+        # gs = gridspec.GridSpec(1, 2, width_ratios=[6, 1])
+        # plt.subplot(gs[0])
+        # plt.plot(results[:, 39], label='Clean3 on Clean Model')
+        # plt.plot(results[:, 41], label='Clean4 on Clean Model')
+        # plt.plot(results[:, 40], label='Mutated3 on Clean Model')
+        # plt.legend()
+        # plt.suptitle("Mean Prediction Error on Clean Model with Unseen Test Data" +
+        #              "\nModel: " + modelPre + "   -   Data: " + modelSuf)
+        # plt.ylabel('Value')
+        # plt.xlabel('Model Version')
+        # plt.subplot(gs[1])
+        # plt.bar(0, np.mean(results[:, 39]), label='Clean3 on Clean Model')
+        # plt.bar(1, np.mean(results[:, 41]), label='Clean4 on Clean Model')
+        # plt.bar(2, np.mean(results[:, 40]), label='Mutated3 on Clean Model')
+        # plt.setp(plt.gca(), ylim=plt.gcf().get_axes()[0].get_ylim())
+        # plt.gca().get_xaxis().set_visible(False)
+        # plt.ylabel("Avg Across Versions")
+        # for line in plt.gcf().get_axes()[0].legend().get_lines():
+        #     line.set_linewidth(2.5)
+        # plt.gcf().set_size_inches(13, 7)
+        # plt.tight_layout()
+        # # plt.show()
+        # plt.savefig(resOutput + 'TotalMPE-3-4' + '.png')
+        # plt.clf()
+
+        # outDict = {
+        #     'totalmpen3nn': np.mean(results[:, 39]),
+        #     'totalmpen4nn': np.mean(results[:, 41]),
+        #     'totalmper3nn': np.mean(results[:, 40])
+        # }
+
+        # with open(resOutput + 'ResultsDict-append', 'wb') as handle:
+        #     pickle.dump(outDict, handle)
+
+        # with open(resOutput + 'resultsCSVDict-append.csv', 'w', newline='') as f:
+        #     writer = csv.writer(f)
+        #     for item in outDict.items():
+        #         writer.writerow(item)
 
         outDict = {
-            'totalmpen3nn': np.mean(results[:, 39]),
-            'totalmpen4nn': np.mean(results[:, 41]),
-            'totalmper3nn': np.mean(results[:, 40])
+            'overallMPENN': np.mean(results[:, 6]),
+            'overallMPERR': np.mean(results[:, 7]),
+            'overallMPERN': np.mean(results[:, 8])
         }
 
-        with open(resOutput + 'ResultsDict-append', 'wb') as handle:
+        with open(resOutput + 'ResultsDict-appendovrllmn', 'wb') as handle:
             pickle.dump(outDict, handle)
 
-        with open(resOutput + 'resultsCSVDict-append.csv', 'w', newline='') as f:
+        with open(resOutput + 'resultsCSVDict-appendovrllmn.csv', 'w', newline='') as f:
             writer = csv.writer(f)
             for item in outDict.items():
                 writer.writerow(item)
