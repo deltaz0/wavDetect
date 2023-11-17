@@ -4,9 +4,9 @@ from matplotlib import gridspec
 import pickle
 import os
 # plt.rcParams.update({'font.size': 14})
-SMALL_SIZE = 13
+SMALL_SIZE = 14
 MEDIUM_SIZE = 15
-BIG_SIZE = 17
+BIG_SIZE = 16
 plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
 plt.rc('axes', titlesize=BIG_SIZE,     # fontsize of the axes title
                 labelsize=BIG_SIZE)    # fontsize of the x and y labels
@@ -61,11 +61,11 @@ for modelVer in [
         resultsFileName = 'results/' + runVer + '/results.csv'
         normListFileName = 'results/' + runVer + '/l2NormList.npy'
         resOutput = 'results/' + runVer + '/'
-        if not os.path.exists('results/altGraph/'):
-            os.mkdir('results/altGraph/')
-        if not os.path.exists('results/altGraph/' + runVer + '/'):
-            os.mkdir('results/altGraph/' + runVer + '/')
-        resOutput = 'results/altGraph/' + runVer + '/'
+        if not os.path.exists('results/altGraph2/'):
+            os.mkdir('results/altGraph2/')
+        if not os.path.exists('results/altGraph2/' + runVer + '/'):
+            os.mkdir('results/altGraph2/' + runVer + '/')
+        resOutput = 'results/altGraph2/' + runVer + '/'
         normList = np.load(normListFileName, allow_pickle=True)
         normList = np.swapaxes(np.array(np.split(np.swapaxes(normList, 0, 1), 16)), -2, -1)
         results = np.genfromtxt(resultsFileName)
